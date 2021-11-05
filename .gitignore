@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Other
+graphene
+.DS_Store
+node_modules/
+.profile/*
+!.profile
+!.profile/user.js
+dist/
