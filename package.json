@@ -60,6 +60,7 @@
     "browserify": "17.0.0",
     "browserify-hmr": "0.4.1",
     "ecstatic": "~3.0.0",
+    "electron": "^15.3.0",
     "flow-bin": "0.163.0",
     "gulp": "4.0.2",
     "gulp-sequence": "1.0.0",

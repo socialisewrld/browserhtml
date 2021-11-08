@@ -177,7 +177,7 @@ gulp.task('watcher', async function () {
   settings.watch = true
 })
 
-gulp.task('hotreload', function () {
+gulp.task('hotreload', async function () {
   settings.plugins['Main'] = [[hmr, {
     port: 3124,
     url: 'http://localhost:3124'
@@ -215,7 +215,7 @@ function copyFiles (src, dst) {
   s.pipe(gulp.dest(dst))
 }
 
-gulp.task('copydist', function () {
+gulp.task('copydist',  async function () {
   copyFiles('LICENSE', dist)
   copyFiles('README.md', dist)
   copyFiles('browser.gif', dist)
@@ -236,15 +236,6 @@ bundler('Main')
 bundler('About/Settings/Main')
 bundler('About/Repl/Main')
 bundler('About/Newtab/Main')
-/* 
-gulp.task('build', [
-  'compressor',
-  'Main',
-  'About/Settings/Main',
-  'About/Repl/Main',
-  'About/Newtab/Main',
-  'copydist'
-]) */
 
 gulp.task('build', gulp.series([
   'compressor',
@@ -254,15 +245,6 @@ gulp.task('build', gulp.series([
   'About/Newtab/Main',
   'copydist'
 ]))
-
-/* gulp.task('watch', [
-  'watcher',
-  'Main',
-  'About/Settings/Main',
-  'About/Newtab/Main',
-  'About/Repl/Main',
-  'copydist'
-]) */
 
 gulp.task('watch', gulp.series([
   'watcher',
@@ -366,13 +348,13 @@ fn main() {
   build.pipe(gulp.dest(dist))
 })
 
-gulp.task('develop', gulp.series(['watch', 'server', 'gecko']))
-gulp.task('build-server', gulp.series(['watch', 'server']))
+gulp.task('develop', gulp.parallel(['watch', 'server', 'gecko']))
+gulp.task('build-server', gulp.parallel(['watch', 'server']))
 
 // gulp.task('develop', sequencial('watch', 'server', 'gecko'))
 // gulp.task('build-server', sequencial('watch', 'server'))
 
-gulp.task('live', gulp.series(['hotreload', 'develop']))
-gulp.task('live-server', gulp.series(['hotreload', 'build-server']))
+gulp.task('live', gulp.parallel(['hotreload', 'develop']))
+gulp.task('live-server', gulp.parallel(['hotreload', 'build-server']))
 
-gulp.task('default', gulp.series(['develop']))
+gulp.task('default', gulp.parallel(['develop']))
