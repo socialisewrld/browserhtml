@@ -13,7 +13,6 @@ import child from 'child_process'
 import http from 'http'
 import path from 'path'
 import babelify from 'babelify'
-import sequencial from 'gulp-sequence'
 import ecstatic from 'ecstatic'
 import hmr from 'browserify-hmr'
 import hotify from 'hotify'
@@ -105,7 +104,7 @@ var bundler = function (entry) {
 }
 
 // Starts a static http server that serves browser.html directory.
-gulp.task('server', function () {
+gulp.task('server', async function () {
   var server = http.createServer(ecstatic({
     root: dist,
     cache: 0
@@ -113,7 +112,7 @@ gulp.task('server', function () {
   server.listen(settings.port)
 })
 
-// Starts a garphene build that loads browser.html app from the localhost:6060
+// Starts a graphene build that loads browser.html app from the localhost:6060
 gulp.task('gecko', function () {
   fs.exists(settings.geckoPath, function (exists) {
     if (exists) {
@@ -174,7 +173,7 @@ gulp.task('compressor', function () {
   }
 })
 
-gulp.task('watcher', function () {
+gulp.task('watcher', async function () {
   settings.watch = true
 })
 
@@ -237,7 +236,7 @@ bundler('Main')
 bundler('About/Settings/Main')
 bundler('About/Repl/Main')
 bundler('About/Newtab/Main')
-
+/* 
 gulp.task('build', [
   'compressor',
   'Main',
@@ -245,16 +244,34 @@ gulp.task('build', [
   'About/Repl/Main',
   'About/Newtab/Main',
   'copydist'
-])
+]) */
 
-gulp.task('watch', [
+gulp.task('build', gulp.series([
+  'compressor',
+  'Main',
+  'About/Settings/Main',
+  'About/Repl/Main',
+  'About/Newtab/Main',
+  'copydist'
+]))
+
+/* gulp.task('watch', [
   'watcher',
   'Main',
   'About/Settings/Main',
   'About/Newtab/Main',
   'About/Repl/Main',
   'copydist'
-])
+]) */
+
+gulp.task('watch', gulp.series([
+  'watcher',
+  'Main',
+  'About/Settings/Main',
+  'About/Newtab/Main',
+  'About/Repl/Main',
+  'copydist'
+]))
 
 const readName =
   contributor =>
@@ -349,10 +366,13 @@ fn main() {
   build.pipe(gulp.dest(dist))
 })
 
-gulp.task('develop', sequencial('watch', 'server', 'gecko'))
-gulp.task('build-server', sequencial('watch', 'server'))
+gulp.task('develop', gulp.series(['watch', 'server', 'gecko']))
+gulp.task('build-server', gulp.series(['watch', 'server']))
 
-gulp.task('live', ['hotreload', 'develop'])
-gulp.task('live-server', ['hotreload', 'build-server'])
+// gulp.task('develop', sequencial('watch', 'server', 'gecko'))
+// gulp.task('build-server', sequencial('watch', 'server'))
 
-gulp.task('default', ['develop'])
+gulp.task('live', gulp.series(['hotreload', 'develop']))
+gulp.task('live-server', gulp.series(['hotreload', 'build-server']))
+
+gulp.task('default', gulp.series(['develop']))

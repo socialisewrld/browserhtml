@@ -2,11 +2,12 @@
   "sourceMaps": "inline",
   "comments": false,
   "presets": [
-    "es2015"
+    ["@babel/preset-env"]
   ],
   "plugins": [
     "syntax-flow",
     "transform-flow-strip-types",
-    "transform-class-properties"
+    "transform-class-properties",
+    ["@babel/transform-runtime"]
   ]
 }

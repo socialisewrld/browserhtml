@@ -4,16 +4,15 @@
 Wayfarer is based on *Browser.html* is a research project aimed at building an experimental [Servo][] browser in HTML. This project has 2 major pieces:
 
 - _Graphene_: a runtime for building native apps in HTML. It's currently in development and part of Servo.
-- _Browser.html_: an experimental browser UI for desktop.
+- _Wayfarer_: an experimental browser UI for desktop.
 
-This repository is for Browser.html (the front-end). Active development of Graphene happens in the [Servo][] repository. Questions? Check out the [FAQ](https://github.com/browserhtml/browserhtml/wiki/FAQ).
+This repository is for Browser.html (the front-end). Active development of Graphene happens in the [Servo][] repository. Questions? Check out the [FAQ](https://github.com/socialisewrld/wayfarer/wiki/FAQ).
 
 ![browser](./browser.gif)
 
 ## Contributing
 
-We welcome contributions from anyone. See [CONTRIBUTING.md](https://github.com/browserhtml/browserhtml/blob/master/CONTRIBUTING.md) for help getting started.
-
+We welcome contributions from anyone. See [CONTRIBUTING.md](https://github.com/socialisewrld/wayfarer/blob/master/CONTRIBUTING.md) for help getting started.
 
 ## Development
 
@@ -22,14 +21,13 @@ There are two major components to the browser.html application.
 1. Local server that serves application UI.
 2. Client that is a application shell that connects to the server and renders served UI.
 
-
 ### Server
 
-If you're working on the Browser.html front-end, you'll need [Node.js][] to install all dependencies and run the development toolchain.
+If you're working on the Wayfarer.html front-end, you'll need [Node.js][] to install all dependencies and run the development toolchain.
 
 ``` sh
-git clone https://github.com/browserhtml/browserhtml.git
-cd browserhtml
+git clone https://github.com/socialisewrld/wayfarer.git
+cd wayfarer
 npm install --no-optional
 ```
 
